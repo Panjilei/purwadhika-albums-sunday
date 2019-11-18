@@ -1,10 +1,11 @@
 import React, {Component} from  'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, Linking } from 'react-native';
+
 import Card from './Card'
 import CardSection from './CardSection'
+import Button from './Button'
 
-
-const styles = {
+const css = StyleSheet.create({
     headerContentStyle: {
         justifyContent: 'space-around'
     },
@@ -25,7 +26,7 @@ const styles = {
         height: 300,
         flex: 1
     }
-};
+})
 
 class AlbumDetail extends Component {
     render() {
@@ -36,25 +37,37 @@ class AlbumDetail extends Component {
             image,
             url
         } = this.props.album ;
+        const {
+            headerContentStyle,
+            headerTextStyle,
+            thumbnailStyle,
+            thumbnailContainerStyle,
+            imageStyle
+        } = css 
         return ( 
             <Card>    
                 <CardSection>
-                    <View style = {styles.thumbnailContainerStyle}>  
+                    <View style = {thumbnailContainerStyle}>  
                         <Image
-                            style = {styles.thumbnailStyle}
+                            style = {thumbnailStyle}
                             source={{ uri: thumbnail_image }}
                         />
                     </View>
-                    <View style = {styles.headerContentStyle}>      
-                        <Text style = { styles.headerTextStyle}>{title}</Text>
-                        <Text>{artist}</Text>
+                    <View style = {headerContentStyle}>      
+                        <Text style = {headerTextStyle}>{title}</Text>
+                        <Text>by {artist}</Text>
                     </View>
                 </CardSection>
                 <CardSection>
                     <Image
-                         style = {styles.imagestyle}
+                         style = {imageStyle}
                          source={{ uri: image }}
                     />
+                </CardSection>
+                <CardSection>
+                    <Button onPress={() => Linking.openURL(url)} >
+                        Buy Now!
+                    </Button> 
                 </CardSection>
             </Card>
         );
